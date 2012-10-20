@@ -20,6 +20,7 @@ public class RssHandler extends DefaultHandler
     private boolean _inItem = false;
     private boolean _inTitle = false;
     private boolean _inLink = false;
+    private boolean _inDate = false;
 
     private Article currRtcl;
     public ArrayList<Article> rtcls = new ArrayList<Article>();
@@ -42,6 +43,8 @@ public class RssHandler extends DefaultHandler
             _inTitle = true;
         else if (name.trim().equals("link"))
             _inLink = true;
+        else if (name.trim().equals("pubDate"))
+            _inDate = true;
         else if (name.trim().equals("item"))
         {
             _inItem = true;
@@ -56,6 +59,8 @@ public class RssHandler extends DefaultHandler
             _inTitle = false;
         else if (name.trim().equals("link"))
             _inLink = false;
+        else if (name.trim().equals("pubDate"))
+            _inDate = false;
         else if (name.trim().equals("item"))
         {
             _inItem = false;
@@ -65,23 +70,31 @@ public class RssHandler extends DefaultHandler
 
     public void characters(char ch[], int start, int length)
     {
-        String chars = new String(ch).substring(start, start + length);
+        String chars = new String(ch, start, length);
         if (_inItem)
         {
             if (_inLink)
-                try
-                {
-                    currRtcl.url = new URL(chars);
-                }
-                catch (MalformedURLException e)
-                {
-                    /*e.printStackTrace();
-                    Log.v("Could not create new URL.",
-                          "Message: "+e.getMessage());
-                    */
-                }
+            {
+                currRtcl.url += chars;
+            }
+
             if (_inTitle)
-                currRtcl.title = chars;
+            {
+                System.out.println(new String(ch));
+                System.out.println(chars);
+                if (currRtcl.title == null)
+                    currRtcl.title = chars;
+                else
+                    currRtcl.title += chars;
+            }
+
+            if (_inDate)
+            {
+                if (currRtcl.date == null)
+                    currRtcl.date = chars;
+                else
+                    currRtcl.date += chars;
+            }
         }
     }
 }
