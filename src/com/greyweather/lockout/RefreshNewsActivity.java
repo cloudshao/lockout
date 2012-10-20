@@ -32,6 +32,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TwoLineListItem;
 
 /**
  * Main activity for this app
@@ -92,9 +93,6 @@ public class RefreshNewsActivity extends ListActivity
         view.setDivider(black);
         view.setDividerHeight(6);
 
-        // Show the view to the user
-        setContentView(view);
-
         // Read in the RSS feed
         RssHandler rh = new RssHandler();
         try 
@@ -122,8 +120,6 @@ public class RefreshNewsActivity extends ListActivity
         // Bind the view to our new adapter
         setListAdapter(adapter);
 
-        view.setAdapter(adapter);
-
         urls.clear();
         for (Article a : rh.getArticles())
         {
@@ -140,19 +136,19 @@ public class RefreshNewsActivity extends ListActivity
 
         }
         adapter.notifyDataSetChanged();
+    }
 
-        // Set an object to handle item clicks for this view
-        view.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View view,
-                int position, long id)
-            {
-                String url = urls.get(position);
-                Log.v(TAG, "Opening "+url.toString());
-                Intent browse =
-                    new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browse);
-            }
-        });
+    /**
+     * Handler for list item clicks
+     */
+    public void onListItemClick(ListView parent, View view,
+        int position, long id)
+    {
+        String url = urls.get(position);
+        Log.v(TAG, "Opening "+url.toString());
+        Intent browse =
+            new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browse);
     }
 }
 
