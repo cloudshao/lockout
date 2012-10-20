@@ -1,4 +1,4 @@
-package com.example.myfirstapp;
+package com.greyweather.lockout;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,6 +15,9 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.io.IOException;
 
+/**
+ * Parses an RSS feed
+ */
 public class RssHandler extends DefaultHandler
 {
     private boolean _inItem = false;
@@ -23,8 +26,21 @@ public class RssHandler extends DefaultHandler
     private boolean _inDate = false;
 
     private Article currRtcl;
-    public ArrayList<Article> rtcls = new ArrayList<Article>();
+    private ArrayList<Article> _rtcls = new ArrayList<Article>();
 
+    /**
+     * Should be called after createFeed
+     * @return  all the articles found in this RSS feed
+     */
+    public ArrayList<Article> getArticles()
+    {
+        return _rtcls;
+    }
+
+    /**
+     * Initializes and parses the feed
+     * @post    the parsed articles can be accessed using getArticles
+     */
     public void createFeed(Context ctx, URL url)
         throws SAXException, ParserConfigurationException, IOException,
                MalformedURLException
@@ -36,6 +52,7 @@ public class RssHandler extends DefaultHandler
         xr.parse(new InputSource(url.openStream()));
     }
 
+    @Override
     public void startElement(String uri, String name, String qName,
                              Attributes attrs)
     {
@@ -52,6 +69,7 @@ public class RssHandler extends DefaultHandler
         }
     }
 
+    @Override
     public void endElement(String uri, String name, String qName)
         throws SAXException
     {
@@ -64,37 +82,24 @@ public class RssHandler extends DefaultHandler
         else if (name.trim().equals("item"))
         {
             _inItem = false;
-            rtcls.add(currRtcl);
+            _rtcls.add(currRtcl);
         }
     }
 
+    @Override
     public void characters(char ch[], int start, int length)
     {
         String chars = new String(ch, start, length);
         if (_inItem)
         {
             if (_inLink)
-            {
-                currRtcl.url += chars;
-            }
+                currRtcl._url += chars;
 
             if (_inTitle)
-            {
-                System.out.println(new String(ch));
-                System.out.println(chars);
-                if (currRtcl.title == null)
-                    currRtcl.title = chars;
-                else
-                    currRtcl.title += chars;
-            }
+                currRtcl._title += chars;
 
             if (_inDate)
-            {
-                if (currRtcl.date == null)
-                    currRtcl.date = chars;
-                else
-                    currRtcl.date += chars;
-            }
+                currRtcl._date += chars;
         }
     }
 }

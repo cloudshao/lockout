@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NHL Lockout</string>
-    <string name="button_refresh">Refresh</string>
-    <string name="title_news">The Latest Lockout News</string>
+    <string name="title_news">News Feed</string>
+    <string name="feed_url">https://news.google.com/news/feeds?hl=en&amp;gl=us&amp;q=nhl+lockout&amp;um=1&amp;ie=UTF-8&amp;output=rss</string>
+    <string name="menu_refresh">Refresh</string>
 </resources>
