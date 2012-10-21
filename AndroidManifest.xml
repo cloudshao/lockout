@@ -7,13 +7,15 @@
                  android:icon="@drawable/lockout_app">
         <activity
             android:name="RefreshNewsActivity"
-            android:theme="@android:style/Theme.Holo"
-            <intent-filter
-                android:label="@string/app_name">
+            android:label="@string/title_news"
+            android:theme="@android:style/Theme.Holo">
+            <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+    <uses-sdk android:minSdkVersion="8"
+              android:targetSdkVersion="14" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

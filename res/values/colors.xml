@@ -1,5 +1,7 @@
 <resources>
     <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#555555</color>
     <color name="item_normal">#040404</color>
     <color name="item_focused">#101010</color>
     <color name="item_pressed">#104050</color>

@@ -14,6 +14,10 @@ public class Article
     public String _title = "";
     public String _url = "";
     public String _date = "";
+    private static final DateFormat inputDateFormatter = 
+        new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
+    private static final DateFormat outputDateFormatter = 
+        new SimpleDateFormat("EEEE MMMM d h:mm a");
 
     /**
      * Returns the formatted date
@@ -23,9 +27,7 @@ public class Article
     public String getFormattedDate()
     {
         try {
-            DateFormat formatter =
-                new SimpleDateFormat("EEEE MMMM d h:mm a");
-            return formatter.format(_getDate());
+            return outputDateFormatter.format(_getDate());
         } catch (ParseException e) {
             return "";
         }
@@ -37,10 +39,7 @@ public class Article
      */
     private Date _getDate() throws ParseException
     {
-        DateFormat formatter =
-            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
-        Date dateObj = formatter.parse(_date);
-
+        Date dateObj = inputDateFormatter.parse(_date);
         return dateObj;
     }
 }
