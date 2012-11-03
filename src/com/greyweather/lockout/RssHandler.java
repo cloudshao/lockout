@@ -2,21 +2,24 @@ package com.greyweather.lockout;
 
 import android.content.Context;
 import android.util.Log;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.io.IOException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Parses an RSS feed
+ * Parses an RSS feed, given the URL of a feed.
+ *
+ * Clients should trigger the parse using createFeed, then retrieve
+ * the results by calling getArticles.
  */
 public class RssHandler extends DefaultHandler
 {

@@ -1,19 +1,24 @@
 package com.greyweather.lockout;
 
 import java.net.URL;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
- * An RSS item
+ * An RSS item. Stores information for an article and provides
+ * formatted publish date.
  */
 public class Article
 {
     public String _title = "";
     public String _url = "";
     public String _date = "";
+
+    // Static because on certain version of android it can
+    // take a long time to initialize the time zone info
+    // so we only want to do it once
     private static final DateFormat inputDateFormatter = 
         new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static final DateFormat outputDateFormatter = 

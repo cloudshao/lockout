@@ -2,25 +2,25 @@ package com.greyweather.lockout;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
-import android.os.Bundle;
-import android.widget.ListView;
-import android.view.View;
-import android.content.Intent;
 import android.content.Context;
-import android.widget.SimpleAdapter;
-import android.net.Uri;
-import android.util.Log;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.view.MenuInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import com.greyweather.lockout.RssHandler;
+import java.lang.NoSuchMethodError;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.lang.NoSuchMethodError;
-import com.greyweather.lockout.RssHandler;
 
 /**
  * Main activity for this app
@@ -44,7 +44,11 @@ public class RefreshNewsActivity extends ListActivity
         {
             ActionBar ab = getActionBar(); 
             if (ab != null)
+            {
                 ab.setDisplayShowHomeEnabled(false);
+                this.setTitle(getResources().getString(
+                    R.string.title_news));
+            }
         }
         catch (NoSuchMethodError e)
         {
@@ -119,9 +123,12 @@ public class RefreshNewsActivity extends ListActivity
         // Grab the list view
         ListView view = getListView();
         if (view == null)
-            Log.e(TAG, "ListView was null");
+        {
+            Log.e(TAG, "Result of getListView was null");
+            return;
+        }
 
-        // Set big dividers - programmatically, we're not formatting
+        // Set big dividers programmatically - we're not formatting
         // this view using xml
         ColorDrawable black = new ColorDrawable(
             this.getResources().getColor(R.color.black));
@@ -166,8 +173,7 @@ public class RefreshNewsActivity extends ListActivity
     {
         String url = urls.get(position);
         Log.v(TAG, "Opening "+url.toString());
-        Intent browse =
-            new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browse);
     }
 }
